@@ -262,7 +262,9 @@ def make_text(layer, font, text, size, origin_x, origin_y, align="left", valign=
 					py.extend(yy)
 			px = pos_x + array(px) * xscale
 			py = pos_y + array(py) * yscale
-			shapes += make_polygon(layer, px, py, hole=(polygon_direction(px, py) == "ccw"), order=order)
+			shapes += make_polygon(layer, px, py,
+                                   hole=(polygon_direction(px, py) == "ccw"),
+                                   order=order)
 		
 		# move position again
 		pos_x += face.glyph.advance.x * xscale

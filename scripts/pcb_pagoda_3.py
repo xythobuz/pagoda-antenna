@@ -98,24 +98,54 @@ def pcb1(pol):
 				track_r2 * cos(a4 * pi/180), track_r2 * sin(a4 * pi/180), outline=track_w2)
 		shapes += mbpcb.make_line("copper1-top", 0.0, 0.0,
 				hole_r1 * cos(a5 * pi/180), hole_r1 * sin(a5 * pi/180), outline=track_w2)
-		shapes += mbpcb.make_line("silk-top",
-				track_r1 * cos(angle * pi/180), track_r1 * sin(angle * pi/180),
-				track_r2 * cos(angle * pi/180), track_r2 * sin(angle * pi/180), outline=0.2)
+		#shapes += mbpcb.make_line("silk-top",
+		#		track_r1 * cos(angle * pi/180), track_r1 * sin(angle * pi/180),
+		#		track_r2 * cos(angle * pi/180), track_r2 * sin(angle * pi/180),
+		#		outline=0.2)
 		shapes += mbpcb.make_line("silk-bot",
 				track_r1 * cos(angle * pi/180), track_r1 * sin(angle * pi/180),
 				track_r2 * cos(angle * pi/180), track_r2 * sin(angle * pi/180), outline=0.2)
 	
 	# text
-	shapes += mbpcb.make_text("silk-top", "fonts/Salsa.ttf", pol, 1.8,
-			0.0, 5.5, align="center", valign="center", spacing=0.05)
-	shapes += mbpcb.make_text("silk-top", "fonts/Salsa.ttf", "Pagoda-" + version, fontsize1,
-			0.0, 3.0, align="center", valign="center", spacing=0.05)
-	shapes += mbpcb.make_text("silk-top", "fonts/Salsa.ttf", "Designed by", 1.8,
-			0.0, -2.0, align="center", valign="center", spacing=0.05)
-	shapes += mbpcb.make_text("silk-top", "fonts/Salsa.ttf", "Maarten", 1.8,
-			0.0, -4.0, align="center", valign="center", spacing=0.05)
-	shapes += mbpcb.make_text("silk-top", "fonts/Salsa.ttf", "Baert", 1.8,
-			0.0, -6.0, align="center", valign="center", spacing=0.05)
+	shapes += mbpcb.make_text("silk-top",
+                              "fonts/Orbitron-Black.ttf",
+                              pol,
+                              1.8,
+                              0.0,
+                              5.5 + 1.9,
+                              align="center",
+                              valign="center",
+                              spacing=0.05)
+
+	shapes += mbpcb.make_text("silk-top",
+                              "fonts/Orbitron-Black.ttf",
+                              "FalkeFunk",
+                              fontsize1,
+                              0.0,
+                              3.0 + 1.8,
+                              align="center",
+                              valign="center",
+                              spacing=0.05)
+
+	shapes += mbpcb.make_text("silk-top",
+                              "fonts/Orbitron-Black.ttf",
+                              "Pagoda-" + version,
+                              fontsize1 + 0.2,
+                              0.0,
+                              -4.8,
+                              align="center",
+                              valign="center",
+                              spacing=0.05)
+
+	shapes += mbpcb.make_text("silk-top",
+                              "fonts/Orbitron-Black.ttf",
+                              "%.1fGHz" % (freq),
+                              1.8,
+                              0.0,
+                              -7.9,
+                              align="center",
+                              valign="center",
+                              spacing=0.05)
 	
 	return shapes
 
@@ -166,14 +196,34 @@ def pcb2(pol):
 				track_r2 * cos(angle * pi/180), track_r2 * sin(angle * pi/180), outline=0.2)
 	
 	# OSHW logo
-	shapes += mbpcb.make_polygon("silk-bot", 1.8 * oshw_x, 1.8 * oshw_y + 5.8)
+	shapes += mbpcb.make_polygon("silk-bot", 1.8 * oshw_x, -1.8 * oshw_y - 7.0)
 	
 	# text
-	shapes2 = mbpcb.make_text("silk-top", "fonts/Salsa.ttf", "Pagoda-%s · %.1fGHz · %s · CC BY-SA" % (version, freq, pol), fontsize2,
-			0.0, 0.0, align="center", valign="center", spacing=0.05)
-	polygon_arc(shapes2, 0.0, 0.0, 6.1, -90.0)
-	mbpcb.pcb_transform(shapes2, 0.0, 0.0, 0.0, 0.0, 0.0, False, True)
-	shapes += shapes2
+	shapes3 = mbpcb.make_text("silk-top",
+                              "fonts/Orbitron-Black.ttf",
+                              "Pagoda-%s - %.1fGHz - %s" % (version, freq, pol),
+                              fontsize2,
+                              0.0,
+                              0.0,
+                              align="center",
+                              valign="center",
+                              spacing=0.05)
+	polygon_arc(shapes3, 0.0, 0.0, 5.2, 90.0)
+	mbpcb.pcb_transform(shapes3, 0.0, 0.0, 0.0, 0.0, 0.0, False, True)
+	shapes += shapes3
+	
+	shapes4 = mbpcb.make_text("silk-top",
+                              "fonts/Orbitron-Black.ttf",
+                              "Design by Maarten Baert  CC BY-SA 4.0",
+                              fontsize2,
+                              0.0,
+                              0.0,
+                              align="center",
+                              valign="center",
+                              spacing=0.05)
+	polygon_arc(shapes4, 0.0, 0.0, 7.5, 90.0)
+	mbpcb.pcb_transform(shapes4, 0.0, 0.0, 0.0, 0.0, 0.0, False, True)
+	shapes += shapes4
 	
 	return shapes
 
@@ -193,15 +243,31 @@ def pcb3():
 	shapes += mbpcb.make_circle("copper1-bot", 0.0, 0.0, disk_r3)
 	
 	# text
-	shapes2 = mbpcb.make_text("silk-top", "fonts/Salsa.ttf", "Pagoda-%s · OSHW · CC BY-SA" % (version), fontsize3,
-			0.0, 0.0, align="center", valign="center", spacing=0.05)
-	polygon_arc(shapes2, 0.0, 0.0, 4.25, -90.0)
-	shapes3 = mbpcb.make_text("silk-top", "fonts/Salsa.ttf", "·", fontsize3,
-			0.0, 0.0, align="center", valign="center", spacing=0.05)
-	polygon_arc(shapes3, 0.0, 0.0, 4.25, 90.0)
+	shapes2 = mbpcb.make_text("silk-top",
+                              "fonts/Orbitron-Black.ttf",
+                              "FalkeFunk",
+                              fontsize3,
+                              0.0,
+                              0.0,
+                              align="center",
+                              valign="center",
+                              spacing=0.05)
+	polygon_arc(shapes2, 0.0, 0.0, 4.0, 90.0)
 	mbpcb.pcb_transform(shapes2, 0.0, 0.0, 0.0, 0.0, 0.0, False, True)
+	shapes += shapes2
+	
+	shapes3 = mbpcb.make_text("silk-top",
+                              "fonts/Orbitron-Black.ttf",
+                              "%.1fGHz" % (freq),
+                              fontsize3,
+                              0.0,
+                              0.0,
+                              align="center",
+                              valign="center",
+                              spacing=0.05)
+	polygon_arc(shapes3, 0.0, 0.0, 4.0, -90.0)
 	mbpcb.pcb_transform(shapes3, 0.0, 0.0, 0.0, 0.0, 0.0, False, True)
-	shapes += shapes2 + shapes3
+	shapes += shapes3
 	
 	return shapes
 
